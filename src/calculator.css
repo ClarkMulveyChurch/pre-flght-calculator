@@ -1,0 +1,17 @@
+table {
+    empty-cells: show;
+}
+
+th {
+    min-width: 10px;
+}
+
+.calculator {
+    text-align: center;
+}
+
+.calcTable {
+    align-items: center;
+    background-color: beige;
+    border: 1px solid;
+}
