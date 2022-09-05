@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import "./calculator.css";
+import app from "./utils/database/config"
+import dbActions from "./utils/database/dbActions"
 
 class Square extends React.Component {
   render() {
@@ -165,6 +167,8 @@ class Chart extends React.Component {
             </th>
           </tr>
         </table>
+        <button onClick={() => dbActions.writeUserData('1', 'clark', 'my@email.com', '111-111-1111')}>write to DB</button>
+        <button onClick={() => dbActions.getUserById('1')}>Read from DB</button>
       </div>
     );
   }
