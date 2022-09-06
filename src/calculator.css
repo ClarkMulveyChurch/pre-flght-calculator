@@ -6,6 +6,10 @@ th {
     min-width: 10px;
 }
 
+input {
+    max-width: 20px;
+}
+
 .calculator {
     text-align: center;
 }
