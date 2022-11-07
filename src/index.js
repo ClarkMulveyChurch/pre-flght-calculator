@@ -2,180 +2,56 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import "./calculator.css";
-import app from "./utils/database/config"
-import dbActions from "./utils/database/dbActions"
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-
+import app from "./utils/database/config";
+import dbActions from "./utils/database/dbActions";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import {
+  Nav,
+  NavLink,
+  Bars,
+  NavMenu,
+  NavBtn,
+  NavBtnLink,
+} from "./components/NavbarElements";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import Home from "./components/home";
+import ManagePersonsForm from "./components/managePersonsForm";
+import ManageAirplanesForm from "./components/manageAirplanesForm";
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://cra.link/PWA
 serviceWorkerRegistration.register();
-
-class Square extends React.Component {
+class Navbar extends React.Component {
   render() {
-    return <button className="square">{/* TODO */}</button>;
-  }
-}
-
-class Board extends React.Component {
-  renderSquare(i) {
-    return <Square />;
-  }
-
-  render() {
-    const status = "Next player: X";
-
     return (
-      <div>
-        <div className="status">{status}</div>
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
-      </div>
+      <>
+        <Nav>
+          <Bars />
+
+          <NavMenu>
+            <NavLink to="/">Pre-Flight</NavLink>
+            <NavLink to="/pilotpass">Manage Pilots/Passengers</NavLink>
+            <NavLink to="/airplanes">Manage Airplanes</NavLink>
+          </NavMenu>
+        </Nav>
+      </>
     );
   }
 }
 
-class Game extends React.Component {
+class App extends React.Component {
   render() {
     return (
-      <div className="game">
-        <div className="game-board">
-          <Board />
-        </div>
-        <div className="game-info">
-          <div>{/* status */}</div>
-          <ol>{/* TODO */}</ol>
-        </div>
-      </div>
-    );
-  }
-}
-
-class Chart extends React.Component {
-  render() {
-    return (
-      <div className="calculator">
-        <h1>Weight & Balance Form</h1>
-        <table className="calcTable">
-          <tr>
-            <th></th>
-            <th>Weight</th>
-            <th>Arm</th>
-            <th>Moment</th>
-          </tr>
-          <tr>
-            <th>Aircraft</th>
-            <th>
-              <input></input>
-            </th>
-            <th>
-              <input></input>
-            </th>
-            <th>
-              <input></input>
-            </th>
-          </tr>
-          <tr>
-            <th>Pilot & Front Pass</th>
-            <th>
-              <input></input>
-            </th>
-            <th>
-              <input></input>
-            </th>
-            <th>
-              <input></input>
-            </th>
-          </tr>
-          <tr>
-            <th>Mid Passengers</th>
-            <th>
-              <input></input>
-            </th>
-            <th>
-              <input></input>
-            </th>
-            <th>
-              <input></input>
-            </th>
-          </tr>
-          <tr>
-            <th>Rear Passengers</th>
-            <th>
-              <input></input>
-            </th>
-            <th>
-              <input></input>
-            </th>
-            <th>
-              <input></input>
-            </th>
-          </tr>
-          <tr>
-            <th>Aft Bag #1</th>
-            <th>
-              <input></input>
-            </th>
-            <th>
-              <input></input>
-            </th>
-            <th>
-              <input></input>
-            </th>
-          </tr>
-          <tr>
-            <th>Aft Bag #2</th>
-            <th>
-              <input></input>
-            </th>
-            <th>
-              <input></input>
-            </th>
-            <th>
-              <input></input>
-            </th>
-          </tr>
-          <tr>
-            <th>Fuel</th>
-            <th>
-              <input></input>
-            </th>
-            <th>
-              <input></input>
-            </th>
-            <th>
-              <input></input>
-            </th>
-          </tr>
-          <tr>
-            <th>Total</th>
-            <th>
-              <input></input>
-            </th>
-            <th>
-              <input></input>
-            </th>
-            <th>
-              <input></input>
-            </th>
-          </tr>
-        </table>
-        <button onClick={() => dbActions.writeUserData('1', 'clark', 'my@email.com', '111-111-1111')}>write to DB</button>
-        <button onClick={() => dbActions.getUserById('1')}>Read from DB</button>
-      </div>
+      <>
+        <Navbar />
+        <Routes>
+          <Route path='/' exact element={<Home/>} />
+          <Route path='/pilotpass' element={<ManagePersonsForm/>} />
+          <Route path='/airplanes' element={<ManageAirplanesForm/>} />
+        </Routes>
+        {/* <ManagePersonsForm /> */}
+        {/* <ManageAirplanesForm /> */}
+      </>
     );
   }
 }
@@ -183,4 +59,8 @@ class Chart extends React.Component {
 // ========================================
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<Chart />);
+root.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+);
