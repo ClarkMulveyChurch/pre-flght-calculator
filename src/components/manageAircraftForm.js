@@ -29,14 +29,14 @@ const ManageAircraftForm = () => {
   const aircraftValuesNumber = [
     "maxGrossWeight",
     "weight",
-    "armAftBagOne",
-    "armAftBagTwo",
     "armAircraftArm",
-    "armFuel",
     "armPilotAndFrontPass",
     "armRearPass",
-    "cgLimitsAft",
+    "armAftBagOne",
+    "armAftBagTwo",
+    "armFuel",
     "cgLimitsForward",
+    "cgLimitsAft",
   ];
 
   console.log('data', data);
