@@ -16,7 +16,7 @@ import {
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Home from "./components/home";
 import ManagePersonsForm from "./components/managePersonsForm";
-import ManageAirplanesForm from "./components/manageAirplanesForm";
+import ManageAircraftForm from "./components/manageAircraftForm";
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://cra.link/PWA
@@ -31,7 +31,7 @@ class Navbar extends React.Component {
           <NavMenu>
             <NavLink to="/">Pre-Flight</NavLink>
             <NavLink to="/pilotpass">Manage Pilots/Passengers</NavLink>
-            <NavLink to="/airplanes">Manage Airplanes</NavLink>
+            <NavLink to="/aircraft">Manage Aircraft</NavLink>
           </NavMenu>
         </Nav>
       </>
@@ -47,10 +47,8 @@ class App extends React.Component {
         <Routes>
           <Route path='/' exact element={<Home/>} />
           <Route path='/pilotpass' element={<ManagePersonsForm/>} />
-          <Route path='/airplanes' element={<ManageAirplanesForm/>} />
+          <Route path='/aircraft' element={<ManageAircraftForm/>} />
         </Routes>
-        {/* <ManagePersonsForm /> */}
-        {/* <ManageAirplanesForm /> */}
       </>
     );
   }

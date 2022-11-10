@@ -6,19 +6,20 @@ const PersonForm = ({
   calculateIsValid,
   personId,
   fetchData,
+  deletePerson,
 }) => {
   const [updatePersonDetails, setUpdatePersonDetails] = useState(personDetails);
   const [isValidData, setIsValidData] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
 
-  const handleSubmit = () => {
+  async function editPerson() {
     if (
       !calculateIsValid(updatePersonDetails.name, updatePersonDetails.weight)
     ) {
       setIsValidData(false);
     } else {
       setIsValidData(true);
-      dbActions.updatePerson(
+      await dbActions.updatePerson(
         updatePersonDetails.name,
         updatePersonDetails.weight,
         personId
@@ -26,7 +27,7 @@ const PersonForm = ({
       setIsEditing(false);
       fetchData();
     }
-  };
+  }
 
   return (
     <>
@@ -35,7 +36,7 @@ const PersonForm = ({
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              handleSubmit();
+              editPerson();
             }}
           >
             <label>
@@ -89,7 +90,11 @@ const PersonForm = ({
           />
         </>
       )}
-      <input type="button" value="Delete" onClick={() => setIsEditing(true)} />
+      <input
+        type="button"
+        value="Delete"
+        onClick={() => deletePerson(personId)}
+      />
     </>
   );
 };
