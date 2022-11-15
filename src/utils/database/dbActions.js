@@ -46,7 +46,6 @@ function saveAircraft(aircraftDetails) {
 }
 
 function updateAircraft(aircraftDetails, aircraftId) {
-  debugger;
   const dbRef = ref(database, "aircraft/" + aircraftId);
 
   set(dbRef, aircraftDetails);
