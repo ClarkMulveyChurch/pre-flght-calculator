@@ -1,5 +1,4 @@
 import { getDatabase, ref, set, onValue, get } from "firebase/database";
-import _ from "lodash";
 
 const database = getDatabase();
 

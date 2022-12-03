@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import app from "./utils/database/config";
 import "./index.css";
 import "./calculator.css";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
