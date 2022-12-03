@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { DataContext } from "../context/dataContext";
 import dbActions from "../utils/database/dbActions";
 import PersonForm from "./personForm";
 
@@ -7,18 +8,13 @@ const ManagePersonsForm = () => {
     name: "",
     weight: "",
   });
+  const [data, actions] = useContext(DataContext);
   const [isValidData, setIsValidData] = useState(true);
-  const [data, setData] = useState([]);
   const [isCreatingPerson, setIsCreatingPerson] = useState(false);
   const [isUpdatingPersons, setIsUpdatingPersons] = useState(false);
 
-  async function fetchData() {
-    const result = await dbActions.getPersons();
-    setData(result);
-  }
-
   useEffect(() => {
-    fetchData();
+    actions.fetchData();
   }, []);
 
   const calculateIsValid = (name, weight) => {
@@ -32,13 +28,13 @@ const ManagePersonsForm = () => {
       setIsValidData(true);
       dbActions.savePerson(personDetails);
       setPersonDetails({ name: "", weight: "" });
-      fetchData();
+      actions.fetchData();
     }
   };
 
   const deletePerson = (personId) => {
     dbActions.deletePerson(personId);
-    fetchData();
+    actions.fetchData();
   };
 
   return (
@@ -87,14 +83,14 @@ const ManagePersonsForm = () => {
       <h2 onClick={() => setIsUpdatingPersons(!isUpdatingPersons)}>Update existing pilot or passenger</h2>
       {isUpdatingPersons && (
         <>
-          {data &&
-            data.map((d) => (
+          {data.personData &&
+            data.personData.map((d) => (
               <PersonForm
                 key={d.key}
                 personDetails={{ name: d.name, weight: d.weight }}
                 calculateIsValid={calculateIsValid}
                 personId={d.key}
-                fetchData={fetchData}
+                fetchData={actions.fetchData}
                 deletePerson={deletePerson}
               />
             ))}

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { DataContext } from "../context/dataContext";
 import dbActions from "../utils/database/dbActions";
 import AircraftForm from "./aircraftForm";
 
@@ -19,9 +20,9 @@ const ManageAircraftForm = () => {
     cgLimitsForward: "",
   };
 
+  const [data, actions] = useContext(DataContext);
   const [aircraftDetails, setAircraftDetails] = useState(initialDetailState);
   const [isValidData, setIsValidData] = useState(true);
-  const [data, setData] = useState([]);
   const [isCreatingAircraft, setIsCreatingAircraft] = useState(false);
   const [isUpdatingAircraft, setIsUpdatingAircraft] = useState(false);
   const aircraftValuesString = ["nickname", "type", "number" ];
@@ -39,13 +40,8 @@ const ManageAircraftForm = () => {
     "cgLimitsAft",
   ];
 
-  async function fetchData() {
-    const result = await dbActions.getAircraft();
-    setData(result);
-  }
-
   useEffect(() => {
-    fetchData();
+    actions.fetchData();
   }, []);
 
   const isValidNumber = (num) => {
@@ -76,13 +72,13 @@ const ManageAircraftForm = () => {
       setIsValidData(true);
       dbActions.saveAircraft(aircraftDetails);
       setAircraftDetails(initialDetailState);
-      fetchData();
+      actions.fetchData();
     }
   };
 
   const deleteAircraft = (aircraftId) => {
     dbActions.deleteAircraft(aircraftId);
-    fetchData();
+    actions.fetchData();
   };
 
   return (
@@ -146,14 +142,14 @@ const ManageAircraftForm = () => {
       <h2 onClick={() => setIsUpdatingAircraft(!isUpdatingAircraft)}>Update existing Aircraft</h2>
       {isUpdatingAircraft && (
         <>
-          {data &&
-            data.map((d) => (
+          {data.aircraftData &&
+            data.aircraftData.map((d) => (
               <AircraftForm
                 key={d.key}
                 aircraftDetails={d.aircraft}
                 calculateIsValid={calculateIsValid}
                 aircraftId={d.key}
-                fetchData={fetchData}
+                fetchData={actions.fetchData}
                 deleteAircraft={deleteAircraft}
                 aircraftValuesString={aircraftValuesString}
                 aircraftValuesNumber={aircraftValuesNumber}

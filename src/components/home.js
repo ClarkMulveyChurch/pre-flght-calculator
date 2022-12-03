@@ -1,11 +1,15 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { DataContext } from "../context/dataContext";
 import CalculatorTable from "./calculatorTable";
 import PreflightChecklist from "./preflightChecklist";
 
 const Home = () => {
   const defaultPerson = { key: "", name: "", weight: "" };
-  const [data] = useContext(DataContext);
+  const [data, actions] = useContext(DataContext);
+
+  useEffect(() => {
+    actions.fetchData();
+  }, []);
 
   console.log('data', data);
 
