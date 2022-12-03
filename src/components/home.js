@@ -1,26 +1,17 @@
-import React, { useState, useEffect } from "react";
-import dbActions from "../utils/database/dbActions";
+import React, { useState, useContext } from "react";
+import { DataContext } from "../context/dataContext";
 import CalculatorTable from "./calculatorTable";
+import PreflightChecklist from "./preflightChecklist";
 
 const Home = () => {
   const defaultPerson = { key: "", name: "", weight: "" };
-  const [aircraftData, setAircraftData] = useState(null);
-  const [personData, setPersonData] = useState(null);
+  const [data] = useContext(DataContext);
+
+  console.log('data', data);
 
   const [selectedAircraft, setSelectedAircraft] = useState(null);
   const [personsPilotFrontPass, setPersonsPilotFrontPass] = useState([]);
   const [personsRear, setPersonsRear] = useState([]);
-
-  async function fetchData() {
-    const aircraftResult = await dbActions.getAircraft();
-    const personResult = await dbActions.getPersons();
-    setAircraftData(aircraftResult);
-    setPersonData(personResult);
-  }
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const getSelector = (e, i, arr, set) => {
     return (
@@ -36,7 +27,7 @@ const Home = () => {
               newArray[i] = defaultPerson;
               set(newArray);
             } else {
-              let person = personData.filter(
+              let person = data.personData.filter(
                 (p) => p.key === e.target.value
               )[0];
               let newArray = arr.slice();
@@ -50,8 +41,8 @@ const Home = () => {
           }}
         >
           <option value="default">Default (No selected person)</option>
-          {personData &&
-            personData.map((p) => <option value={p.key}>{p.name}</option>)}
+          {data.personData &&
+            data.personData.map((p) => <option value={p.key}>{p.name}</option>)}
         </select>
         <input
           type="button"
@@ -117,14 +108,14 @@ const Home = () => {
               setSelectedAircraft(null);
             } else {
               setSelectedAircraft(
-                aircraftData.filter((a) => a.key === e.target.value)[0]
+                data.aircraftData.filter((a) => a.key === e.target.value)[0]
               );
             }
           }}
         >
           <option value="default">Default (No selected aircraft)</option>
-          {aircraftData &&
-            aircraftData.map((e) => (
+          {data.aircraftData &&
+            data.aircraftData.map((e) => (
               <option value={e.key}>{e.aircraft.nickname}</option>
             ))}
         </select>
@@ -134,6 +125,7 @@ const Home = () => {
         rearPassWeight={getTotalWeight(personsRear)}
         aircraftData={selectedAircraft?.aircraft}
       />
+      <PreflightChecklist/>
     </>
   );
 };

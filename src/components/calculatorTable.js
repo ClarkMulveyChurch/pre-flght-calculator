@@ -35,7 +35,6 @@ const CalculatorTable = ({
     cgLimitsAft: 0,
   };
 
-  console.log("aircraftData", aircraftData);
   const [tableEntries, setTableEntries] = useState(initialState);
 
   const getTotalWeight = () => {

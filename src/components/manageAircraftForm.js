@@ -39,8 +39,6 @@ const ManageAircraftForm = () => {
     "cgLimitsAft",
   ];
 
-  console.log('data', data);
-
   async function fetchData() {
     const result = await dbActions.getAircraft();
     setData(result);
