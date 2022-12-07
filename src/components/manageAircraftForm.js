@@ -25,7 +25,7 @@ const ManageAircraftForm = () => {
   const [isValidData, setIsValidData] = useState(true);
   const [isCreatingAircraft, setIsCreatingAircraft] = useState(false);
   const [isUpdatingAircraft, setIsUpdatingAircraft] = useState(false);
-  const aircraftValuesString = ["nickname", "type", "number" ];
+  const aircraftValuesString = ["nickname", "type", "number"];
 
   const aircraftValuesNumber = [
     "maxGrossWeight",
@@ -72,7 +72,11 @@ const ManageAircraftForm = () => {
       setIsValidData(true);
       dbActions.saveAircraft(aircraftDetails);
       setAircraftDetails(initialDetailState);
-      actions.fetchData();
+      if (!navigator.onLine) {
+        actions.addOfflineAircraft(aircraftDetails);
+      } else {
+        actions.fetchData();
+      }
     }
   };
 
@@ -139,22 +143,28 @@ const ManageAircraftForm = () => {
           <>{!isValidData && <div>correct this plz</div>}</>
         </form>
       )}
-      <h2 onClick={() => setIsUpdatingAircraft(!isUpdatingAircraft)}>Update existing Aircraft</h2>
-      {isUpdatingAircraft && (
+      {navigator.onLine && (
         <>
-          {data.aircraftData &&
-            data.aircraftData.map((d) => (
-              <AircraftForm
-                key={d.key}
-                aircraftDetails={d.aircraft}
-                calculateIsValid={calculateIsValid}
-                aircraftId={d.key}
-                fetchData={actions.fetchData}
-                deleteAircraft={deleteAircraft}
-                aircraftValuesString={aircraftValuesString}
-                aircraftValuesNumber={aircraftValuesNumber}
-              />
-            ))}
+          <h2 onClick={() => setIsUpdatingAircraft(!isUpdatingAircraft)}>
+            Update existing Aircraft
+          </h2>
+          {isUpdatingAircraft && (
+            <>
+              {data.aircraftData &&
+                data.aircraftData.map((d) => (
+                  <AircraftForm
+                    key={d.key}
+                    aircraftDetails={d.aircraft}
+                    calculateIsValid={calculateIsValid}
+                    aircraftId={d.key}
+                    fetchData={actions.fetchData}
+                    deleteAircraft={deleteAircraft}
+                    aircraftValuesString={aircraftValuesString}
+                    aircraftValuesNumber={aircraftValuesNumber}
+                  />
+                ))}
+            </>
+          )}
         </>
       )}
     </>

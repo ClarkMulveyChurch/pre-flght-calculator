@@ -28,7 +28,11 @@ const ManagePersonsForm = () => {
       setIsValidData(true);
       dbActions.savePerson(personDetails);
       setPersonDetails({ name: "", weight: "" });
-      actions.fetchData();
+      if (!navigator.onLine) {
+        actions.addOfflinePerson(personDetails);
+      } else {
+        actions.fetchData();
+      }
     }
   };
 
@@ -80,22 +84,31 @@ const ManagePersonsForm = () => {
           </form>
         </>
       )}
-      <h2 onClick={() => setIsUpdatingPersons(!isUpdatingPersons)}>Update existing pilot or passenger</h2>
-      {isUpdatingPersons && (
+      {navigator.onLine && (
         <>
-          {data.personData &&
-            data.personData.map((d) => (
-              <PersonForm
-                key={d.key}
-                personDetails={{ name: d.name, weight: d.weight }}
-                calculateIsValid={calculateIsValid}
-                personId={d.key}
-                fetchData={actions.fetchData}
-                deletePerson={deletePerson}
-              />
-            ))}
+          <h2 onClick={() => setIsUpdatingPersons(!isUpdatingPersons)}>
+            Update existing pilot or passenger
+          </h2>
+          {isUpdatingPersons && (
+            <>
+              {data.personData &&
+                data.personData.map((d) => (
+                  <PersonForm
+                    key={d.key}
+                    personDetails={{ name: d.name, weight: d.weight }}
+                    calculateIsValid={calculateIsValid}
+                    personId={d.key}
+                    fetchData={actions.fetchData}
+                    deletePerson={deletePerson}
+                  />
+                ))}
+            </>
+          )}
         </>
       )}
+      {data.personData.map((d) => (
+        <div>{d.name}</div>
+      ))}
     </>
   );
 };

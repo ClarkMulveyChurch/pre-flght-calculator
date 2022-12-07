@@ -37,8 +37,17 @@ async function getPersons() {
   return persons;
 }
 
+async function addStoredPersons(persons) {
+  await persons.forEach(person => {
+    if (person.key === '') {
+      savePerson(person);
+    }
+  })
+}
+
 //////////// AIRCRAFT
 function saveAircraft(aircraftDetails) {
+  console.log('aircraftDetails', aircraftDetails);
   const dbRef = ref(database, "aircraft/" + parseInt(Date.now()));
 
   set(dbRef, aircraftDetails);
@@ -66,15 +75,25 @@ async function getAircraft() {
   return aircraft;
 }
 
+async function addStoredAircraft(aircraft) {
+  await aircraft.forEach(a => {
+    if (a.key === '') {
+      saveAircraft(a.aircraft);
+    }
+  })
+}
+
 const dbActions = {
   savePerson: savePerson,
   updatePerson: updatePerson,
   deletePerson: deletePerson,
   getPersons: getPersons,
+  addStoredPersons: addStoredPersons,
   saveAircraft: saveAircraft,
   updateAircraft: updateAircraft,
   deleteAircraft: deleteAircraft,
   getAircraft: getAircraft,
+  addStoredAircraft: addStoredAircraft,
 };
 
 export default dbActions;

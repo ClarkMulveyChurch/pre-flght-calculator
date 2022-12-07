@@ -6,12 +6,11 @@ import PreflightChecklist from "./preflightChecklist";
 const Home = () => {
   const defaultPerson = { key: "", name: "", weight: "" };
   const [data, actions] = useContext(DataContext);
+  console.log('data', data);
 
   useEffect(() => {
     actions.fetchData();
   }, []);
-
-  console.log('data', data);
 
   const [selectedAircraft, setSelectedAircraft] = useState(null);
   const [personsPilotFrontPass, setPersonsPilotFrontPass] = useState([]);

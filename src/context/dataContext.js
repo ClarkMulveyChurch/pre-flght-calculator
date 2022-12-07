@@ -1,5 +1,6 @@
-import React, { useState, createContext, useEffect } from "react";
+import React, { useState, createContext, useEffect, useContext } from "react";
 import dbActions from "../utils/database/dbActions";
+import { OnlineStatusContext } from "./connectionContext";
 
 const initialState = {
   personData: [],
@@ -10,26 +11,59 @@ export const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
   const [data, setData] = useState(initialState);
-
-  console.log("context");
-  
   useEffect(() => {
-    console.log("useEffect in Context");
-    fetchData();
+    async function addStoredData() {
+      await dbActions.addStoredPersons(
+        JSON.parse(localStorage.getItem("personData"))
+      );
+      await dbActions.addStoredAircraft(
+        JSON.parse(localStorage.getItem("aircraftData"))
+      );
+      fetchData();
+    }
+    
+    if (navigator.onLine) {
+      addStoredData();
+    } else {
+      fetchData();
+    }
   }, []);
 
   async function fetchData() {
-    console.log("fetchData in Context");
-    const aircraftResult = await dbActions.getAircraft();
-    const personResult = await dbActions.getPersons();
+    if (navigator.onLine) {
+      const aircraftResult = await dbActions.getAircraft();
+      const personResult = await dbActions.getPersons();
 
-    localStorage.setItem("aircraftData", JSON.stringify(aircraftResult));
-    localStorage.setItem("personData", JSON.stringify(personResult));
+      localStorage.setItem("aircraftData", JSON.stringify(aircraftResult));
+      localStorage.setItem("personData", JSON.stringify(personResult));
+    } else {
+      console.log("NOT ONLINE");
+    }
 
     setData({
       aircraftData: JSON.parse(localStorage.getItem("aircraftData")),
       personData: JSON.parse(localStorage.getItem("personData")),
     });
+  }
+
+  async function addOfflinePerson(personDetails) {
+    personDetails.key = "";
+    localStorage.setItem(
+      "personData",
+      JSON.stringify([...data.personData, personDetails])
+    );
+    fetchData();
+  }
+
+  function addOfflineAircraft(aircraftDetails) {
+    var newAircraft = {};
+    newAircraft.key = "";
+    newAircraft.aircraft = aircraftDetails;
+    localStorage.setItem(
+      "aircraftData",
+      JSON.stringify([...data.aircraftData, newAircraft])
+    );
+    fetchData();
   }
 
   return (
@@ -38,6 +72,8 @@ export const DataProvider = ({ children }) => {
         data,
         {
           fetchData: fetchData,
+          addOfflinePerson: addOfflinePerson,
+          addOfflineAircraft: addOfflineAircraft,
         }, // These are actions
       ]}
     >

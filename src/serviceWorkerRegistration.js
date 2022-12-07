@@ -1,5 +1,3 @@
-import dbActions from "./utils/database/dbActions";
-
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
@@ -23,9 +21,7 @@ const isLocalhost = Boolean(
 );
 
 export function register(config) {
-  console.log("registering service worker");
   if (process.env.NODE_ENV === "production" && "serviceWorker" in navigator) {
-    console.log("registering service worker2");
     // The URL constructor is available in all browsers that support SW.
     const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
     if (publicUrl.origin !== window.location.origin) {

@@ -4,18 +4,14 @@ import app from "./utils/database/config";
 import "./index.css";
 import "./calculator.css";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
-import {
-  Nav,
-  NavLink,
-  Bars,
-  NavMenu,
-} from "./components/NavbarElements";
+import { Nav, NavLink, Bars, NavMenu } from "./components/NavbarElements";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/home";
 import ManagePersonsForm from "./components/managePersonsForm";
 import ManageAircraftForm from "./components/manageAircraftForm";
 import Weather from "./components/weather";
 import { DataProvider } from "./context/dataContext";
+import { OnlineStatusProvider } from "./context/connectionContext";
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://cra.link/PWA
@@ -60,8 +56,10 @@ class App extends React.Component {
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
-    <DataProvider>
-      <App />
-    </DataProvider>
+    <OnlineStatusProvider>
+      <DataProvider>
+        <App />
+      </DataProvider>
+    </OnlineStatusProvider>
   </BrowserRouter>
 );
