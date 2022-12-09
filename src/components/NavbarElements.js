@@ -1,86 +1,96 @@
-import { FaBars } from 'react-icons/fa';
-import { NavLink as Link } from 'react-router-dom';
-import styled from 'styled-components';
-  
-export const Nav = styled.nav`
-  background: #63D471;
-  height: 85px;
-  display: flex;
-  justify-content: space-between;
-  padding: 0.2rem calc((100vw - 1000px) / 2);
-  z-index: 12;
-  /* Third Nav */
-  /* justify-content: flex-start; */
+import { FaBars } from "react-icons/fa";
+import { NavLink as Link } from "react-router-dom";
+import styled from "styled-components";
+import React, { useEffect, useState } from "react";
+
+const Nav = styled.nav`
+  overflow: hidden;
+  background-color: #333;
 `;
-  
-export const NavLink = styled(Link)`
-  color: #808080;
+
+const Container = styled.div`
+  overflow: hidden;
+  background-color: #333;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+`;
+
+const FirstLink = styled(Link)`
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
   text-decoration: none;
-  padding: 0 1rem;
-  height: 100%;
-  cursor: pointer;
-  &.active {
-    color: #000000;
-  }
+  font-size: 17px;
 `;
-  
-export const Bars = styled(FaBars)`
-  display: none;
-  color: #808080;
-  @media screen and (max-width: 768px) {
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    transform: translate(-100%, 75%);
-    font-size: 1.8rem;
-    cursor: pointer;
-  }
-`;
-  
-export const NavMenu = styled.div`
-  display: flex;
-  align-items: center;
-  margin-right: -24px;
-  /* Second Nav */
-  /* margin-right: 24px; */
-  /* Third Nav */
-  /* width: 100vw;
-  white-space: nowrap; */
-  @media screen and (max-width: 768px) {
-    display: none;
-  }
-`;
-  
-export const NavBtn = styled.nav`
-  display: flex;
-  align-items: center;
-  margin-right: 24px;
-  /* Third Nav */
-  /* justify-content: flex-end;
-  width: 100vw; */
-  @media screen and (max-width: 768px) {
-    display: none;
-  }
-`;
-  
-export const NavBtnLink = styled(Link)`
-  border-radius: 4px;
-  background: #808080;
-  padding: 10px 22px;
-  color: #000000;
-  outline: none;
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
+
+const NavLink = styled(Link)`
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
   text-decoration: none;
-  /* Second Nav */
-  margin-left: 24px;
-  &:hover {
-    transition: all 0.2s ease-in-out;
-    background: #fff;
-    color: #808080;
-  }
+  font-size: 17px;
 `;
+
+const Bars = styled(FaBars)`
+  /* display: none;*/
+  color: #808080;
+  /* @media screen and (max-width: 600px) { */
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(-100%, 75%);
+  font-size: 1.8rem;
+  cursor: pointer;
+  /* } */
+`;
+
+const NavBar = () => {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [media, setMedia] = useState(
+    window.matchMedia("(min-width: 600px)").matches
+  );
+  console.log("dropdownOpen", dropdownOpen);
+  console.log("media", media);
+
+  useEffect(() => {
+    window.matchMedia("(min-width: 600px)").addEventListener("change", (e) => {
+      setMedia(e.matches);
+    });
+  }, []);
+  return (
+    <>
+      {media ? (
+        <Nav>
+          {/* <NavMenu> */}
+          <FirstLink to="/">Pre-Flight</FirstLink>
+          <NavLink to="/pilotpass">Manage Pilots/Passengers</NavLink>
+          <NavLink to="/aircraft">Manage Aircraft</NavLink>
+          <NavLink to="/weather">Weather</NavLink>
+          {/* </NavMenu> */}
+        </Nav>
+      ) : (
+        <Nav>
+          {/* <NavMenu> */}
+          {dropdownOpen ? (
+            <Container>
+              <FirstLink to="/">Pre-Flight</FirstLink>
+              <NavLink to="/pilotpass">Manage Pilots/Passengers</NavLink>
+              <NavLink to="/aircraft">Manage Aircraft</NavLink>
+              <NavLink to="/weather">Weather</NavLink>
+            </Container>
+          ) : (
+            <FirstLink to="/">Pre-Flight</FirstLink>
+          )}
+          <Bars onClick={() => setDropdownOpen(!dropdownOpen)} />
+          {/* </NavMenu> */}
+        </Nav>
+      )}
+    </>
+  );
+};
+export default NavBar;

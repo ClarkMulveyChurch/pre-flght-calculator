@@ -2,11 +2,12 @@ import React, { useState, useContext, useEffect } from "react";
 import { DataContext } from "../context/dataContext";
 import CalculatorTable from "./calculatorTable";
 import PreflightChecklist from "./preflightChecklist";
+import "./styles/calculator.css";
 
 const Home = () => {
   const defaultPerson = { key: "", name: "", weight: "" };
   const [data, actions] = useContext(DataContext);
-  console.log('data', data);
+  console.log("data", data);
 
   useEffect(() => {
     actions.fetchData();
@@ -55,6 +56,7 @@ const Home = () => {
             newArray.splice(i, 1);
             set(newArray);
           }}
+          className="homeDeleteButton"
         ></input>
       </>
     );
@@ -76,29 +78,40 @@ const Home = () => {
         <h3>Select Pilot/Passengers</h3>
         <div>
           <h4>Pilot & Front Pass</h4>
-          <input
-            type="button"
-            value="Add"
-            onClick={() => addPerson(setPersonsPilotFrontPass)}
-          ></input>
-          {personsPilotFrontPass &&
-            personsPilotFrontPass.map((e, i) =>
-              getSelector(e, i, personsPilotFrontPass, setPersonsPilotFrontPass)
-            )}
-          <div>Total weight: {getTotalWeight(personsPilotFrontPass)}</div>
+          <div className="presetContainer">
+            <input
+              type="button"
+              value="Add"
+              onClick={() => addPerson(setPersonsPilotFrontPass)}
+              className="homeAddButton"
+            ></input>
+            {personsPilotFrontPass &&
+              personsPilotFrontPass.map((e, i) =>
+                getSelector(
+                  e,
+                  i,
+                  personsPilotFrontPass,
+                  setPersonsPilotFrontPass
+                )
+              )}
+            <div>Total weight: {getTotalWeight(personsPilotFrontPass)}</div>
+          </div>
         </div>
         <div>
           <h4>Rear Pass</h4>
-          <input
-            type="button"
-            value="Add"
-            onClick={() => addPerson(setPersonsRear)}
-          ></input>
-          {personsRear &&
-            personsRear.map((e, i) =>
-              getSelector(e, i, personsRear, setPersonsRear)
-            )}
-          <div>Total weight: {getTotalWeight(personsRear)}</div>
+          <div className="presetContainer">
+            <input
+              type="button"
+              value="Add"
+              onClick={() => addPerson(setPersonsRear)}
+              className="homeAddButton"
+            ></input>
+            {personsRear &&
+              personsRear.map((e, i) =>
+                getSelector(e, i, personsRear, setPersonsRear)
+              )}
+            <div>Total weight: {getTotalWeight(personsRear)}</div>
+          </div>
         </div>
       </div>
       <div>
@@ -128,7 +141,7 @@ const Home = () => {
         rearPassWeight={getTotalWeight(personsRear)}
         aircraftData={selectedAircraft?.aircraft}
       />
-      <PreflightChecklist/>
+      <PreflightChecklist />
     </>
   );
 };

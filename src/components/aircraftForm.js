@@ -76,10 +76,11 @@ const AircraftForm = ({
                 </>
               );
             })}
-            <input type="submit" value="Submit" />
+            <input type="submit" value="Submit" className="formAddButton" />
             <>{!isValidData && <div>correct this plz</div>}</>
           </form>
           <input
+            className="formCancelButton"
             type="button"
             value="Cancel"
             onClick={() => {
@@ -93,6 +94,7 @@ const AircraftForm = ({
         <>
           <div>{aircraftDetails.nickname}</div>
           <input
+            className="formCancelButton"
             type="button"
             value="Edit"
             onClick={() => setIsEditing(true)}
@@ -100,6 +102,7 @@ const AircraftForm = ({
         </>
       )}
       <input
+        className="formDeleteButton"
         type="button"
         value="Delete"
         onClick={() => deleteAircraft(aircraftId)}

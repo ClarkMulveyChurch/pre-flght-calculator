@@ -87,61 +87,68 @@ const ManageAircraftForm = () => {
 
   return (
     <>
-      <h2 onClick={() => setIsCreatingAircraft(!isCreatingAircraft)}>
+      <h2
+        onClick={() => {
+          setIsValidData(true);
+          setIsCreatingAircraft(!isCreatingAircraft);
+        }}
+      >
         Create new Aircraft
       </h2>
       {isCreatingAircraft && (
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            addNewAircraft();
-          }}
-        >
-          <>
-            {aircraftValuesString.map((v) => {
-              return (
-                <>
-                  <label key={aircraftValuesString.indexOf(v)}>
-                    {v}:
-                    <input
-                      type="text"
-                      value={aircraftDetails[v]}
-                      onChange={(e) => {
-                        setAircraftDetails({
-                          ...aircraftDetails,
-                          [v]: e.target.value,
-                        });
-                      }}
-                    />
-                  </label>
-                  <br />
-                </>
-              );
-            })}
-            {aircraftValuesNumber.map((v) => {
-              return (
-                <>
-                  <label key={aircraftValuesNumber.indexOf(v)}>
-                    {v}:
-                    <input
-                      type="number"
-                      value={aircraftDetails[v]}
-                      onChange={(e) => {
-                        setAircraftDetails({
-                          ...aircraftDetails,
-                          [v]: e.target.value,
-                        });
-                      }}
-                    />
-                  </label>
-                  <br />
-                </>
-              );
-            })}
-          </>
-          <input type="submit" value="Submit" />
-          <>{!isValidData && <div>correct this plz</div>}</>
-        </form>
+        <div className="formContainer">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              addNewAircraft();
+            }}
+          >
+            <>
+              {aircraftValuesString.map((v) => {
+                return (
+                  <>
+                    <label key={aircraftValuesString.indexOf(v)}>
+                      {v}:
+                      <input
+                        type="text"
+                        value={aircraftDetails[v]}
+                        onChange={(e) => {
+                          setAircraftDetails({
+                            ...aircraftDetails,
+                            [v]: e.target.value,
+                          });
+                        }}
+                      />
+                    </label>
+                    <br />
+                  </>
+                );
+              })}
+              {aircraftValuesNumber.map((v) => {
+                return (
+                  <>
+                    <label key={aircraftValuesNumber.indexOf(v)}>
+                      {v}:
+                      <input
+                        type="number"
+                        value={aircraftDetails[v]}
+                        onChange={(e) => {
+                          setAircraftDetails({
+                            ...aircraftDetails,
+                            [v]: e.target.value,
+                          });
+                        }}
+                      />
+                    </label>
+                    <br />
+                  </>
+                );
+              })}
+            </>
+            <input type="submit" value="Submit" className="formAddButton" />
+            <>{!isValidData && <div>Please enter correct information</div>}</>
+          </form>
+        </div>
       )}
       {navigator.onLine && (
         <>
@@ -149,21 +156,23 @@ const ManageAircraftForm = () => {
             Update existing Aircraft
           </h2>
           {isUpdatingAircraft && (
-            <>
+            <div className="formContainer">
               {data.aircraftData &&
                 data.aircraftData.map((d) => (
-                  <AircraftForm
-                    key={d.key}
-                    aircraftDetails={d.aircraft}
-                    calculateIsValid={calculateIsValid}
-                    aircraftId={d.key}
-                    fetchData={actions.fetchData}
-                    deleteAircraft={deleteAircraft}
-                    aircraftValuesString={aircraftValuesString}
-                    aircraftValuesNumber={aircraftValuesNumber}
-                  />
+                  <div className="editContainer">
+                    <AircraftForm
+                      key={d.key}
+                      aircraftDetails={d.aircraft}
+                      calculateIsValid={calculateIsValid}
+                      aircraftId={d.key}
+                      fetchData={actions.fetchData}
+                      deleteAircraft={deleteAircraft}
+                      aircraftValuesString={aircraftValuesString}
+                      aircraftValuesNumber={aircraftValuesNumber}
+                    />
+                  </div>
                 ))}
-            </>
+            </div>
           )}
         </>
       )}

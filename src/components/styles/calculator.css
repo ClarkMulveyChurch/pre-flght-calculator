@@ -1,0 +1,148 @@
+.presetContainer {
+  margin-left: 1rem;
+}
+
+.presetContainer input {
+  margin: 0.5rem 0;
+}
+
+.presetContainer .homeDeleteButton {
+  background-color: #705050;
+  border: none;
+  color: white;
+  padding: 8px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin-left: 1rem;
+}
+
+.homeAddButton {
+  background-color: #507051; /* Green */
+  border: none;
+  color: white;
+  padding: 8px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+}
+
+.calcTable input {
+  width: 80%;
+  border-collapse: collapse;
+}
+
+.summaryContainer {
+  margin-left: 1rem;
+}
+
+label input {
+  margin: 0.8rem 0 0 0.8rem;
+}
+
+.validHeader {
+  background-color: #507051; /* Green */
+  padding: 1rem;
+  margin-right: 1rem;
+  color: white;
+  max-width: 15rem;
+  text-align: center;
+}
+
+.invalidHeader {
+  background-color: #705050;
+  padding: 1rem;
+  margin-right: 1rem;
+  color: white;
+  max-width: 15rem;
+  text-align: center;
+}
+
+.formContainer {
+  margin-left: 1rem;
+}
+
+.formAddButton {
+  background-color: #507051; /* Green */
+  border: none;
+  color: white;
+  padding: 8px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin-top: 1rem;
+}
+
+.formDeleteButton {
+  background-color: #705050;
+  border: none;
+  color: white;
+  padding: 8px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+}
+
+.formCancelButton {
+  background-color: #727171;
+  border: none;
+  color: white;
+  padding: 8px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+}
+
+.editContainer {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.weatherSubmitButton {
+  background-color: #507051; /* Green */
+  border: none;
+  color: white;
+  padding: 8px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 180px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+ 
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+
+  bottom: 100%;
+  left: 50%;
+  margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}

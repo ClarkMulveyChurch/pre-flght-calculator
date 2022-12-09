@@ -57,19 +57,32 @@ const Weather = () => {
                 }}
               />
             </label>
-            <input type="submit" value="Submit" />
+            <input
+              type="submit"
+              value="Submit"
+              className="weatherSubmitButton"
+            />
           </form>
           {fetchErrorMessage && <div>Please try a different airport code</div>}
           {weatherData && (
             <>
               <div>
-                <h3>Current Weather (METAR):</h3>
+                <h3>
+                  Current Weather (
+                  <span className="tooltip">
+                    METAR
+                    <span className="tooltiptext">
+                      Meteorological Terminal Air Report
+                    </span>
+                  </span>
+                  ):
+                </h3>
                 <p>Place: {weatherData.metar.place}</p>
                 <p>Time: {weatherData.metar.time}</p>
                 <p>Data: {weatherData.metar.data}</p>
               </div>
               <div>
-                <h3>Forecasted Weather (TAF):</h3>
+                <h3>Forecasted Weather (<span className="tooltip">TAF<span className="tooltiptext">Terminal Area Forecast</span></span>):</h3>
                 <p>From: {weatherData.taf.from}</p>
                 <p>To: {weatherData.taf.to}</p>
                 <p>Issued: {weatherData.taf.issued}</p>
@@ -80,7 +93,10 @@ const Weather = () => {
           )}
         </>
       ) : (
-        <div>plz go online</div>
+        <h3>
+          Weather is only available online - if you'd like this functionality
+          please connect.
+        </h3>
       )}
     </>
   );

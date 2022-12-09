@@ -52,25 +52,28 @@ const PersonForm = ({
                 }}
               />
             </label>
-            <label>
-              Weight:
-              <input
-                type="number"
-                value={updatePersonDetails.weight}
-                onChange={(e) =>
-                  setUpdatePersonDetails({
-                    ...updatePersonDetails,
-                    weight: e.target.valueAsNumber
-                      ? e.target.valueAsNumber
-                      : "",
-                  })
-                }
-              />
-            </label>
-            <input type="submit" value="Submit" />
-            <>{!isValidData && <div>correct this plz</div>}</>
-          </form>
+              <br />
+              <label>
+                Weight:
+                <input
+                  type="number"
+                  value={updatePersonDetails.weight}
+                  onChange={(e) =>
+                    setUpdatePersonDetails({
+                      ...updatePersonDetails,
+                      weight: e.target.valueAsNumber
+                        ? e.target.valueAsNumber
+                        : "",
+                    })
+                  }
+                />
+              </label>
+              <br />
+              <input type="submit" value="Submit" className="formAddButton"/>
+              <>{!isValidData && <div>Please enter correct information</div>}</>
+            </form>
           <input
+            className="formCancelButton"
             type="button"
             value="Cancel"
             onClick={() => {
@@ -84,6 +87,7 @@ const PersonForm = ({
         <>
           <div>{personDetails.name}</div>
           <input
+            className="formCancelButton"
             type="button"
             value="Edit"
             onClick={() => setIsEditing(true)}
@@ -91,6 +95,7 @@ const PersonForm = ({
         </>
       )}
       <input
+        className="formDeleteButton"
         type="button"
         value="Delete"
         onClick={() => deletePerson(personId)}

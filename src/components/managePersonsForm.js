@@ -43,45 +43,57 @@ const ManagePersonsForm = () => {
 
   return (
     <>
-      <h2 onClick={() => setIsCreatingPerson(!isCreatingPerson)}>
+      <h2
+        onClick={() => {
+          setIsValidData(true);
+          setIsCreatingPerson(!isCreatingPerson);
+        }}
+      >
         Create new pilot or passenger
       </h2>
       {isCreatingPerson && (
         <>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              addNewPerson();
-            }}
-          >
-            <label>
-              Name:
-              <input
-                type="text"
-                value={personDetails.name}
-                onChange={(e) => {
-                  setPersonDetails({ ...personDetails, name: e.target.value });
-                }}
-              />
-            </label>
-            <label>
-              Weight:
-              <input
-                type="number"
-                value={personDetails.weight}
-                onChange={(e) =>
-                  setPersonDetails({
-                    ...personDetails,
-                    weight: e.target.valueAsNumber
-                      ? e.target.valueAsNumber
-                      : "",
-                  })
-                }
-              />
-            </label>
-            <input type="submit" value="Submit" />
-            <>{!isValidData && <div>correct this plz</div>}</>
-          </form>
+          <div className="formContainer">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                addNewPerson();
+              }}
+            >
+              <label>
+                Name:
+                <input
+                  type="text"
+                  value={personDetails.name}
+                  onChange={(e) => {
+                    setPersonDetails({
+                      ...personDetails,
+                      name: e.target.value,
+                    });
+                  }}
+                />
+              </label>
+              <br />
+              <label>
+                Weight:
+                <input
+                  type="number"
+                  value={personDetails.weight}
+                  onChange={(e) =>
+                    setPersonDetails({
+                      ...personDetails,
+                      weight: e.target.valueAsNumber
+                        ? e.target.valueAsNumber
+                        : "",
+                    })
+                  }
+                />
+              </label>
+              <br />
+              <input type="submit" value="Submit" className="formAddButton" />
+              <>{!isValidData && <div>Please enter correct information</div>}</>
+            </form>
+          </div>
         </>
       )}
       {navigator.onLine && (
@@ -90,25 +102,24 @@ const ManagePersonsForm = () => {
             Update existing pilot or passenger
           </h2>
           {isUpdatingPersons && (
-            <>
+            <div className="formContainer">
               {data.personData &&
                 data.personData.map((d) => (
-                  <PersonForm
-                    key={d.key}
-                    personDetails={{ name: d.name, weight: d.weight }}
-                    calculateIsValid={calculateIsValid}
-                    personId={d.key}
-                    fetchData={actions.fetchData}
-                    deletePerson={deletePerson}
-                  />
+                  <div className="editContainer">
+                    <PersonForm
+                      key={d.key}
+                      personDetails={{ name: d.name, weight: d.weight }}
+                      calculateIsValid={calculateIsValid}
+                      personId={d.key}
+                      fetchData={actions.fetchData}
+                      deletePerson={deletePerson}
+                    />
+                  </div>
                 ))}
-            </>
+            </div>
           )}
         </>
       )}
-      {data.personData.map((d) => (
-        <div>{d.name}</div>
-      ))}
     </>
   );
 };

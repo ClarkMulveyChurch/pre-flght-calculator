@@ -118,9 +118,7 @@ const CalculatorTable = ({
       cgLimitsForward: aircraftData?.cgLimitsForward
         ? aircraftData?.cgLimitsForward
         : 0,
-      cgLimitsAft: aircraftData?.cgLimitsAft
-        ? aircraftData?.cgLimitsAft
-        : 0,
+      cgLimitsAft: aircraftData?.cgLimitsAft ? aircraftData?.cgLimitsAft : 0,
     });
   }, [aircraftData]);
 
@@ -136,7 +134,7 @@ const CalculatorTable = ({
 
   return (
     <>
-      <table>
+      <table className="calcTable">
         <thead>
           <tr>
             <th></th>
@@ -165,7 +163,9 @@ const CalculatorTable = ({
               />
             </td>
             <td>
-              {tableEntries["aircraft"]?.weight * tableEntries["aircraft"]?.arm}
+              {(
+                tableEntries["aircraft"]?.weight * tableEntries["aircraft"]?.arm
+              ).toFixed(2)}
             </td>
           </tr>
           <tr>
@@ -187,8 +187,10 @@ const CalculatorTable = ({
               />
             </td>
             <td>
-              {tableEntries["pilotFrontPass"]?.weight *
-                tableEntries["pilotFrontPass"]?.arm}
+              {(
+                tableEntries["pilotFrontPass"]?.weight *
+                tableEntries["pilotFrontPass"]?.arm
+              ).toFixed(2)}
             </td>
           </tr>
           <tr>
@@ -210,7 +212,9 @@ const CalculatorTable = ({
               />
             </td>
             <td>
-              {tableEntries["rearPass"]?.weight * tableEntries["rearPass"]?.arm}
+              {(
+                tableEntries["rearPass"]?.weight * tableEntries["rearPass"]?.arm
+              ).toFixed(2)}
             </td>
           </tr>
           <tr>
@@ -232,8 +236,10 @@ const CalculatorTable = ({
               />
             </td>
             <td>
-              {tableEntries["aftBagOne"]?.weight *
-                tableEntries["aftBagOne"]?.arm}
+              {(
+                tableEntries["aftBagOne"]?.weight *
+                tableEntries["aftBagOne"]?.arm
+              ).toFixed(2)}
             </td>
           </tr>
           <tr>
@@ -255,8 +261,10 @@ const CalculatorTable = ({
               />
             </td>
             <td>
-              {tableEntries["aftBagTwo"]?.weight *
-                tableEntries["aftBagTwo"]?.arm}
+              {(
+                tableEntries["aftBagTwo"]?.weight *
+                tableEntries["aftBagTwo"]?.arm
+              ).toFixed(2)}
             </td>
           </tr>
           <tr>
@@ -277,63 +285,72 @@ const CalculatorTable = ({
                 onChange={(e) => handleChange("fuel", "arm", e)}
               />
             </td>
-            <td>{tableEntries["fuel"]?.weight * tableEntries["fuel"]?.arm}</td>
+            <td>
+              {(
+                tableEntries["fuel"]?.weight * tableEntries["fuel"]?.arm
+              ).toFixed(2)}
+            </td>
           </tr>
           <tr>
             <td>{"total"}</td>
-            <td>{getTotalWeight()}</td>
+            <td>{getTotalWeight().toFixed(2)}</td>
             <td> </td>
-            <td>{getTotalMoment()}</td>
+            <td>{getTotalMoment().toFixed(2)}</td>
           </tr>
         </tbody>
       </table>
       <div>
         <h3>Is Aircraft Within Weight</h3>
-        <label>
-          Max Gross Weight:
-          <input
-            type="number"
-            value={tableEntries.maxGrossWeight}
-            onChange={(e) => {
-              setTableEntries({
-                ...tableEntries,
-                maxGrossWeight: e.target.value,
-              });
-            }}
-          />
-        </label>
-        <p>Actual Weight: {getTotalWeight()}</p>
-        <p>Useful Load: {tableEntries.maxGrossWeight - getTotalWeight()}</p>
+        <div className="summaryContainer">
+          <label>
+            Max Gross Weight:
+            <input
+              type="number"
+              value={tableEntries.maxGrossWeight}
+              onChange={(e) => {
+                setTableEntries({
+                  ...tableEntries,
+                  maxGrossWeight: e.target.value,
+                });
+              }}
+            />
+          </label>
+          <p>Actual Weight: {getTotalWeight().toFixed(2)}</p>
+          <p>Useful Load: {(tableEntries.maxGrossWeight - getTotalWeight()).toFixed(2)}</p>
+        </div>
       </div>
       <div>
         <h3>Cg Limits</h3>
-        <label>
-          Forward
-          <input
-            type="number"
-            value={tableEntries.cgLimitsForward}
-            onChange={(e) => {
-              setTableEntries({
-                ...tableEntries,
-                maxGrossWeight: e.target.value,
-              });
-            }}
-          />
-        </label><br/>
-        <label>
-          Aft
-          <input
-            type="number"
-            value={tableEntries.cgLimitsAft}
-            onChange={(e) => {
-              setTableEntries({
-                ...tableEntries,
-                maxGrossWeight: e.target.value,
-              });
-            }}
-          />
-        </label>
-        <p>Actual: {getCgLimits() ? getCgLimits() : 0}</p>
+        <div className="summaryContainer">
+          <label>
+            Forward
+            <input
+              type="number"
+              value={tableEntries.cgLimitsForward}
+              onChange={(e) => {
+                setTableEntries({
+                  ...tableEntries,
+                  maxGrossWeight: e.target.value,
+                });
+              }}
+            />
+          </label>
+          <br />
+          <label>
+            Aft
+            <input
+              type="number"
+              value={tableEntries.cgLimitsAft}
+              onChange={(e) => {
+                setTableEntries({
+                  ...tableEntries,
+                  maxGrossWeight: e.target.value,
+                });
+              }}
+            />
+          </label>
+          <p>Actual: {getCgLimits() ? getCgLimits().toFixed(2) : 0}</p>
+        </div>
       </div>
     </>
   );
