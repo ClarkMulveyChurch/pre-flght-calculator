@@ -1,6 +1,5 @@
 import React, { useState, createContext, useEffect, useContext } from "react";
 import dbActions from "../utils/database/dbActions";
-import { OnlineStatusContext } from "./connectionContext";
 
 const initialState = {
   personData: [],
@@ -21,7 +20,7 @@ export const DataProvider = ({ children }) => {
       );
       fetchData();
     }
-    
+
     if (navigator.onLine) {
       addStoredData();
     } else {
@@ -36,8 +35,6 @@ export const DataProvider = ({ children }) => {
 
       localStorage.setItem("aircraftData", JSON.stringify(aircraftResult));
       localStorage.setItem("personData", JSON.stringify(personResult));
-    } else {
-      console.log("NOT ONLINE");
     }
 
     setData({

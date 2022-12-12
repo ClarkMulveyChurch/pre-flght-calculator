@@ -7,7 +7,6 @@ import "./styles/calculator.css";
 const Home = () => {
   const defaultPerson = { key: "", name: "", weight: "" };
   const [data, actions] = useContext(DataContext);
-  console.log("data", data);
 
   useEffect(() => {
     actions.fetchData();
@@ -32,11 +31,11 @@ const Home = () => {
               set(newArray);
             } else {
               let person = data.personData.filter(
-                (p) => p.key === e.target.value
+                (p) => (p.key === e.target.value) || (data.personData.indexOf(p) === parseInt(e.target.value))
               )[0];
               let newArray = arr.slice();
               newArray[i] = {
-                key: person.key,
+                key: person.key ? person.key : data.personData.indexOf(person),
                 name: person.name,
                 weight: person.weight,
               };
@@ -46,7 +45,7 @@ const Home = () => {
         >
           <option value="default">Default (No selected person)</option>
           {data.personData &&
-            data.personData.map((p) => <option value={p.key}>{p.name}</option>)}
+            data.personData.map((p) => <option value={p.key ? p.key : data.personData.indexOf(p)}>{p.name}</option>)}
         </select>
         <input
           type="button"
@@ -124,7 +123,7 @@ const Home = () => {
               setSelectedAircraft(null);
             } else {
               setSelectedAircraft(
-                data.aircraftData.filter((a) => a.key === e.target.value)[0]
+                data.aircraftData.filter((a) => (a.key === e.target.value) || (data.aircraftData.indexOf(a) === parseInt(e.target.value)))[0]
               );
             }
           }}
@@ -132,7 +131,7 @@ const Home = () => {
           <option value="default">Default (No selected aircraft)</option>
           {data.aircraftData &&
             data.aircraftData.map((e) => (
-              <option value={e.key}>{e.aircraft.nickname}</option>
+              <option value={e.key ? e.key : data.aircraftData.indexOf(e)}>{e.aircraft.nickname}</option>
             ))}
         </select>
       </div>

@@ -36,9 +36,7 @@ const NavLink = styled(Link)`
 `;
 
 const Bars = styled(FaBars)`
-  /* display: none;*/
   color: #808080;
-  /* @media screen and (max-width: 600px) { */
   display: block;
   position: absolute;
   top: 0;
@@ -46,7 +44,6 @@ const Bars = styled(FaBars)`
   transform: translate(-100%, 75%);
   font-size: 1.8rem;
   cursor: pointer;
-  /* } */
 `;
 
 const NavBar = () => {
@@ -54,8 +51,6 @@ const NavBar = () => {
   const [media, setMedia] = useState(
     window.matchMedia("(min-width: 600px)").matches
   );
-  console.log("dropdownOpen", dropdownOpen);
-  console.log("media", media);
 
   useEffect(() => {
     window.matchMedia("(min-width: 600px)").addEventListener("change", (e) => {
@@ -66,16 +61,13 @@ const NavBar = () => {
     <>
       {media ? (
         <Nav>
-          {/* <NavMenu> */}
           <FirstLink to="/">Pre-Flight</FirstLink>
           <NavLink to="/pilotpass">Manage Pilots/Passengers</NavLink>
           <NavLink to="/aircraft">Manage Aircraft</NavLink>
           <NavLink to="/weather">Weather</NavLink>
-          {/* </NavMenu> */}
         </Nav>
       ) : (
         <Nav>
-          {/* <NavMenu> */}
           {dropdownOpen ? (
             <Container>
               <FirstLink to="/">Pre-Flight</FirstLink>
@@ -87,7 +79,6 @@ const NavBar = () => {
             <FirstLink to="/">Pre-Flight</FirstLink>
           )}
           <Bars onClick={() => setDropdownOpen(!dropdownOpen)} />
-          {/* </NavMenu> */}
         </Nav>
       )}
     </>

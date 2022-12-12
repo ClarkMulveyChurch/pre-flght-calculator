@@ -8,7 +8,6 @@ const Weather = () => {
   const [airportCode, setAirportCode] = useState("");
   const [weatherData, setWeatherData] = useState(null);
   const [fetchErrorMessage, setFetchErrorMessage] = useState(false);
-  console.log("weatherData", weatherData);
 
   const getWeather = async () => {
     if (airportCode) {

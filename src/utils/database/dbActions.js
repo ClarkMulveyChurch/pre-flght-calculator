@@ -47,7 +47,6 @@ async function addStoredPersons(persons) {
 
 //////////// AIRCRAFT
 function saveAircraft(aircraftDetails) {
-  console.log('aircraftDetails', aircraftDetails);
   const dbRef = ref(database, "aircraft/" + parseInt(Date.now()));
 
   set(dbRef, aircraftDetails);
